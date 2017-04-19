@@ -25,12 +25,12 @@ import javax.swing.JOptionPane;
  */
 public class notepadd extends javax.swing.JFrame {
 
-    /**
-     * Creates new form notepadd
-     */
+  Integer userIndexx = 0;
+  
     public notepadd() {
         initComponents();
         customInit();
+        
     }
 
     private void customInit() {
@@ -352,13 +352,12 @@ public class notepadd extends javax.swing.JFrame {
 
     private void menuDBSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDBSaveActionPerformed
 
-        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText()) {
+        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(),this) {
 
             @Override
             public void done() {
 
                 JOptionPane.showMessageDialog(null, "File saved. ", "Succes!", JOptionPane.INFORMATION_MESSAGE);
-
             }
 
         };
@@ -369,7 +368,7 @@ public class notepadd extends javax.swing.JFrame {
 
     private void openFromDBmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFromDBmenuActionPerformed
 
-        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea);
+        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea,this);
         o.execute();
 
     }//GEN-LAST:event_openFromDBmenuActionPerformed
@@ -389,7 +388,7 @@ public class notepadd extends javax.swing.JFrame {
 
     private void buttonOpenFromCloudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenFromCloudActionPerformed
 
-        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea) {
+        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea,this) {
 
             @Override
             public void done() {
@@ -405,7 +404,7 @@ public class notepadd extends javax.swing.JFrame {
 
     private void buttonSaveToCloudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveToCloudActionPerformed
 
-        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText()) {
+        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(),this) {
 
             @Override
             public void done() {
@@ -420,7 +419,7 @@ public class notepadd extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonSaveToCloudActionPerformed
 
     private void buttonSignOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSignOutActionPerformed
-        int raspuns = JOptionPane.showConfirmDialog(null, "Are you sure you want to sign out?", "Warning!", JOptionPane.YES_NO_OPTION);
+        int raspuns = JOptionPane.showConfirmDialog(null, "Are you sure you want to log out?", "Warning!", JOptionPane.YES_NO_OPTION);
         if (raspuns == JOptionPane.YES_OPTION) {
             this.setVisible(false);
             new LogInFrame().setVisible(true);
@@ -448,6 +447,8 @@ public class notepadd extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private notepad.AFCTextArea aFCTextArea1;
@@ -484,5 +485,11 @@ public class notepadd extends javax.swing.JFrame {
         this.loggedinLabel.setText(x);
 
     }
-
+    public void setIndex(Integer index){
+        
+        this.userIndexx = index;
+        
+    }
+    
+    public Integer getIndex(){return this.userIndexx;}
 }

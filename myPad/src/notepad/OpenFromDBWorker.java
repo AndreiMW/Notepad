@@ -16,10 +16,12 @@ import javax.swing.JTextArea;
 public class OpenFromDBWorker extends DatabaseWorker {
     
     JTextArea openText;
+    notepadd n = new notepadd();
     
-    public OpenFromDBWorker(JTextArea a) {
+    public OpenFromDBWorker(JTextArea a,notepadd b) {
         
         this.openText = a;
+        this.n  = b;
         
     }
 
@@ -31,7 +33,7 @@ public class OpenFromDBWorker extends DatabaseWorker {
         try{
             this.createConnection();
             
-            SQLCommand = "SELECT file_content FROM file_DB WHERE file_id LIKE 1";
+            SQLCommand = "SELECT file_content FROM file_DB WHERE file_id LIKE " + n.getIndex();
             ResultSet rs = stm.executeQuery(SQLCommand);
             
             rs.next();

@@ -5,13 +5,11 @@
  */
 package notepad;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import javax.swing.JOptionPane;
-import javax.swing.SwingWorker;
+
 
 /**
  *
@@ -38,6 +36,7 @@ public class CreateAccountWorker extends DatabaseWorker {
         String createUserCommand = null;
         String getMaxIndex = null;
         String getUsernames = null;
+        String createIndexFileDB = null;
 
         try {
 
@@ -54,6 +53,7 @@ public class CreateAccountWorker extends DatabaseWorker {
             }
 
             createUserCommand = "INSERT INTO AFC(Intrare,Utilizator,Parola) VALUES(" + (index + 1) + ",'" + this.createUser + "','" + this.createPassword + "')";
+            createIndexFileDB = "INSERT INTO file_db(file_id) VALUES(" + (index + 1) + ")";
 
             getUsernames = "SELECT Utilizator FROM AFC";
             ResultSet rsuser = stm.executeQuery(getUsernames);
@@ -69,6 +69,7 @@ public class CreateAccountWorker extends DatabaseWorker {
                 JOptionPane.showMessageDialog(null, "Username already exists ", "Error", JOptionPane.WARNING_MESSAGE);
             } else {
                 stm.executeUpdate(createUserCommand);
+                stm.executeUpdate(createIndexFileDB);
                 new LogInFrame().setVisible(true);
                 this.createAccountWorker.setVisible(false);
             }

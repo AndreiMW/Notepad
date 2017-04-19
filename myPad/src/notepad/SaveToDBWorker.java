@@ -15,11 +15,13 @@ import java.sql.SQLException;
 public class SaveToDBWorker extends DatabaseWorker {
     
     String text = null;
+    notepadd n = new notepadd();
     
-    public SaveToDBWorker(String a) {
+    
+    public SaveToDBWorker(String a,notepadd b) {
         
-        this.text = a;
-        
+        this.text = a; 
+        this.n = b;
     }
 
     @Override
@@ -30,7 +32,7 @@ public class SaveToDBWorker extends DatabaseWorker {
         try {
 
             this.createConnection();
-            SQLCommand = "UPDATE file_db SET file_content ='" + this.text +"' WHERE file_id = 1";
+            SQLCommand = "UPDATE file_db SET file_content ='" + this.text +"' WHERE file_id ='" + n.getIndex() +"'";
             
             stm.executeQuery(SQLCommand);
            

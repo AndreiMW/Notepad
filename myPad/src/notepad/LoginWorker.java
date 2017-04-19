@@ -21,7 +21,7 @@ public class LoginWorker extends DatabaseWorker {
     
     LogInFrame workerLogin = new LogInFrame();
     
-    private Integer indexx = 0;
+    public Integer indexx = 0;
     
     private boolean succesfulLogin = false;
     
@@ -78,6 +78,7 @@ public class LoginWorker extends DatabaseWorker {
             
             n.setLabel("Logged in as: " + workerUser);
             n.setVisible(true);
+            n.setIndex(this.indexx);
             this.workerLogin.setVisible(false);
         }
         else{
@@ -87,8 +88,6 @@ public class LoginWorker extends DatabaseWorker {
         
         return true;
     }
-    
-    public Integer getIndex(){return this.indexx;}
    
 }
 

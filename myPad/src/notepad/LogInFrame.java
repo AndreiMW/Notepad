@@ -13,7 +13,7 @@ import java.awt.Color;
  */
 public class LogInFrame extends javax.swing.JFrame {
     
-    public Integer userIndex = 0;
+    static Integer userIndex = 0;
 
     public LogInFrame() {
         initComponents();
@@ -31,7 +31,7 @@ public class LogInFrame extends javax.swing.JFrame {
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         createButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -79,8 +79,8 @@ public class LogInFrame extends javax.swing.JFrame {
         });
         getContentPane().add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 90, 40));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\loginImage.jpg")); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 400));
+        Background.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\loginImage.jpg")); // NOI18N
+        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 400));
 
         pack();
         setLocationRelativeTo(null);
@@ -96,17 +96,11 @@ public class LogInFrame extends javax.swing.JFrame {
             passwordUserString += passwordUser[i];
         }
        
-        LoginWorker lw = new LoginWorker(loginUser,passwordUserString,this){
-            
-            @Override
-            public void done(){
-                
-                userIndex = this.getIndex();
-                
-            }
-        };
-        
+        LoginWorker lw = new LoginWorker(loginUser,passwordUserString,this);
+   
         lw.execute();
+       
+       
   
       
     }//GEN-LAST:event_loginButtonActionPerformed
@@ -162,8 +156,8 @@ public class LogInFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Background;
     private javax.swing.JButton createButton;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
     private javax.swing.JTextField usernameField;
