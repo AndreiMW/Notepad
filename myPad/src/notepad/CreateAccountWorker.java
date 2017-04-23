@@ -64,6 +64,20 @@ public class CreateAccountWorker extends DatabaseWorker {
                 }
 
             }
+            
+            if(createUser.length() < 6){
+            
+                JOptionPane.showMessageDialog(null, "Username must be at least 6 characters long. ", "Error", JOptionPane.WARNING_MESSAGE);
+                
+            }
+            else{
+                
+                if(createPassword.length() < 8){
+                    
+                    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long. ", "Error", JOptionPane.WARNING_MESSAGE);
+                
+                }
+                else{
 
             if (userExists) {
                 JOptionPane.showMessageDialog(null, "Username already exists ", "Error", JOptionPane.WARNING_MESSAGE);
@@ -76,6 +90,8 @@ public class CreateAccountWorker extends DatabaseWorker {
             rs.close();
             stm.close();
             conn.close();
+                }
+            }
 
         } catch (SQLException ex) {
             System.out.println(ex);
