@@ -7,6 +7,9 @@ public class CreateAccountFrame extends javax.swing.JFrame {
 
     public CreateAccountFrame() {
         initComponents();
+        createProgressBar.setVisible(false);
+        creatingAccountLabel.setVisible(false);
+        new ProgressBarColor();
     }
 
     /**
@@ -20,7 +23,9 @@ public class CreateAccountFrame extends javax.swing.JFrame {
         createPasswordField = new javax.swing.JPasswordField();
         createCreateButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
+        createProgressBar = new javax.swing.JProgressBar();
+        creatingAccountLabel = new javax.swing.JLabel();
+        createAccountBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setPreferredSize(new java.awt.Dimension(280, 400));
@@ -59,8 +64,16 @@ public class CreateAccountFrame extends javax.swing.JFrame {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 280, 80, 30));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\createImage.jpg")); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 280, 400));
+        createProgressBar.setIndeterminate(true);
+        getContentPane().add(createProgressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, -1, -1));
+
+        creatingAccountLabel.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        creatingAccountLabel.setForeground(new java.awt.Color(255, 255, 255));
+        creatingAccountLabel.setText("Creating Account...");
+        getContentPane().add(creatingAccountLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, 170, 30));
+
+        createAccountBackground.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\createImage.jpg")); // NOI18N
+        getContentPane().add(createAccountBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -1, 280, 400));
 
         pack();
         setLocationRelativeTo(null);
@@ -77,8 +90,19 @@ public class CreateAccountFrame extends javax.swing.JFrame {
                 passwordUserString += passwordUserArray[i];
             }
        
-        CreateAccountWorker cw = new CreateAccountWorker(newUser, passwordUserString, this);
+        CreateAccountWorker cw = new CreateAccountWorker(newUser, passwordUserString, this){
+        @Override
+        protected void done(){
+        
+            createProgressBar.setVisible(false);
+            creatingAccountLabel.setVisible(false);
+        
+        }
+        
+        };
         cw.execute();
+        createProgressBar.setVisible(true);
+        creatingAccountLabel.setVisible(true);
       
     }//GEN-LAST:event_createCreateButtonActionPerformed
 
@@ -93,10 +117,12 @@ public class CreateAccountFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton backButton;
+    private javax.swing.JLabel createAccountBackground;
     private javax.swing.JButton createCreateButton;
     private javax.swing.JPasswordField createPasswordField;
+    private javax.swing.JProgressBar createProgressBar;
     private javax.swing.JTextField createUserField;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel creatingAccountLabel;
     // End of variables declaration//GEN-END:variables
     
 }

@@ -7,6 +7,7 @@ package notepad;
 
 import java.awt.Color;
 
+
 /**
  *
  * @author andre
@@ -18,6 +19,12 @@ public class LogInFrame extends javax.swing.JFrame {
     public LogInFrame() {
         initComponents();
         getContentPane().setLayout(null);
+        
+        progressBar.setVisible(false);
+        logginInLabel.setVisible(false);
+        
+        new ProgressBarColor();
+       
     }
 
     /**
@@ -31,7 +38,9 @@ public class LogInFrame extends javax.swing.JFrame {
         usernameField = new javax.swing.JTextField();
         passwordField = new javax.swing.JPasswordField();
         createButton = new javax.swing.JButton();
-        Background = new javax.swing.JLabel();
+        progressBar = new javax.swing.JProgressBar();
+        logginInLabel = new javax.swing.JLabel();
+        loginBackground = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -79,8 +88,16 @@ public class LogInFrame extends javax.swing.JFrame {
         });
         getContentPane().add(createButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 350, 90, 40));
 
-        Background.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\loginImage.jpg")); // NOI18N
-        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 400));
+        progressBar.setIndeterminate(true);
+        getContentPane().add(progressBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
+
+        logginInLabel.setFont(new java.awt.Font("Bauhaus 93", 0, 14)); // NOI18N
+        logginInLabel.setForeground(new java.awt.Color(255, 255, 255));
+        logginInLabel.setText("Logging in...");
+        getContentPane().add(logginInLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 100, -1));
+
+        loginBackground.setIcon(new javax.swing.ImageIcon("D:\\Java Projects\\myPad\\resources\\loginImage.jpg")); // NOI18N
+        getContentPane().add(loginBackground, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 280, 400));
 
         pack();
         setLocationRelativeTo(null);
@@ -96,12 +113,19 @@ public class LogInFrame extends javax.swing.JFrame {
             passwordUserString += passwordUser[i];
         }
        
-        LoginWorker lw = new LoginWorker(loginUser,passwordUserString,this);
-   
+        LoginWorker lw = new LoginWorker(loginUser,passwordUserString,this){
+            
+            @Override 
+            protected void done(){
+                
+                progressBar.setVisible(false);
+                logginInLabel.setVisible(false);
+        
+        }};
         lw.execute();
-       
-       
-  
+        progressBar.setVisible(true);
+        logginInLabel.setVisible(true);
+      
       
     }//GEN-LAST:event_loginButtonActionPerformed
 
@@ -156,10 +180,12 @@ public class LogInFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Background;
     private javax.swing.JButton createButton;
+    private javax.swing.JLabel logginInLabel;
+    private javax.swing.JLabel loginBackground;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
+    private javax.swing.JProgressBar progressBar;
     private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 
