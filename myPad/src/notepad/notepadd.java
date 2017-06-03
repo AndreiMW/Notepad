@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,12 +25,12 @@ import javax.swing.JOptionPane;
  */
 public class notepadd extends javax.swing.JFrame {
 
-  Integer userIndexx = 0;
-  
+    Integer userIndexx = 0;
+
     public notepadd() {
         initComponents();
         customInit();
-        
+
     }
 
     private void customInit() {
@@ -67,6 +68,8 @@ public class notepadd extends javax.swing.JFrame {
                 }
             });
         }));
+        
+        
 
     }
 
@@ -351,7 +354,7 @@ public class notepadd extends javax.swing.JFrame {
 
     private void menuDBSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuDBSaveActionPerformed
 
-        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(),this) {
+        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(), this) {
 
             @Override
             public void done() {
@@ -362,32 +365,48 @@ public class notepadd extends javax.swing.JFrame {
         };
         stdb.execute();
 
-
     }//GEN-LAST:event_menuDBSaveActionPerformed
 
     private void openFromDBmenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFromDBmenuActionPerformed
 
-        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea,this);
+        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea, this);
         o.execute();
 
     }//GEN-LAST:event_openFromDBmenuActionPerformed
 
     private void buttonOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenActionPerformed
 
-        fc.showOpenDialog(this);
-        File file = this.fc.getSelectedFile();
-        createNewTab(file);
+        int result = fc.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+
+            File file = this.fc.getSelectedFile();
+            createNewTab(file);
+
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+
+            System.out.println("File opening cancelled.");
+
+        }
 
     }//GEN-LAST:event_buttonOpenActionPerformed
 
     private void buttonSaveLocalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveLocalActionPerformed
-        fc.showSaveDialog(this);
-        this.saveFile(fc.getSelectedFile());
+
+        int result = fc.showSaveDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+
+            this.saveFile(fc.getSelectedFile());
+
+        } else if (result == JFileChooser.CANCEL_OPTION) {
+
+            System.out.println("File saving cancelled.");
+
+        }
     }//GEN-LAST:event_buttonSaveLocalActionPerformed
 
     private void buttonOpenFromCloudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonOpenFromCloudActionPerformed
 
-        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea,this) {
+        OpenFromDBWorker o = new OpenFromDBWorker(this.currentSelectedTextArea.textArea, this) {
 
             @Override
             public void done() {
@@ -403,7 +422,7 @@ public class notepadd extends javax.swing.JFrame {
 
     private void buttonSaveToCloudActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonSaveToCloudActionPerformed
 
-        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(),this) {
+        SaveToDBWorker stdb = new SaveToDBWorker(this.currentSelectedTextArea.textArea.getText(), this) {
 
             @Override
             public void done() {
@@ -446,8 +465,7 @@ public class notepadd extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private notepad.AFCTextArea aFCTextArea1;
@@ -484,11 +502,14 @@ public class notepadd extends javax.swing.JFrame {
         this.loggedinLabel.setText(x);
 
     }
-    public void setIndex(Integer index){
-        
+
+    public void setIndex(Integer index) {
+
         this.userIndexx = index;
-        
+
     }
-    
-    public Integer getIndex(){return this.userIndexx;}
+
+    public Integer getIndex() {
+        return this.userIndexx;
+    }
 }

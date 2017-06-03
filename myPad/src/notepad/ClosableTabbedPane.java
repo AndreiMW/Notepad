@@ -17,8 +17,8 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import javax.swing.JTabbedPane;
 
-public class ClosableTabbedPane extends JTabbedPane
-{
+public class ClosableTabbedPane extends JTabbedPane{
+
   private static final long serialVersionUID = 1L;
   private TabCloseUI closeUI = new TabCloseUI(this);
 
@@ -56,7 +56,9 @@ public class ClosableTabbedPane extends JTabbedPane
       this.tabbedPane = pane;
       this.tabbedPane.addMouseMotionListener(this);
       this.tabbedPane.addMouseListener(this);
+      
     }
+    
     public void mouseEntered(MouseEvent me) {
     }
     public void mouseExited(MouseEvent me) {
@@ -67,12 +69,19 @@ public class ClosableTabbedPane extends JTabbedPane
     }
     public void mouseDragged(MouseEvent me) {  } 
     public void mouseReleased(MouseEvent me) { if (closeUnderMouse(me.getX(), me.getY())) {
+        
         boolean isToCloseTab = ClosableTabbedPane.this.tabAboutToClose(this.selectedTab);
+        if(this.tabbedPane.getTabCount() > 1){
+            
         if ((isToCloseTab) && (this.selectedTab > -1)) {
-          this.tabbedPane.removeTabAt(this.selectedTab);
+          
+            this.tabbedPane.removeTabAt(this.selectedTab);
+          
         }
+        
         this.selectedTab = this.tabbedPane.getSelectedIndex();
-      } }
+        
+      } }}
 
     public void mouseMoved(MouseEvent me)
     {
@@ -106,8 +115,10 @@ public class ClosableTabbedPane extends JTabbedPane
 
     public void paint(Graphics g)
     {
+        
       int tabCount = this.tabbedPane.getTabCount();
-      for (int j = 0; j < tabCount; j++)
+      if(tabCount > 1){
+      for (int j = 0; j < tabCount ; j++)
         if (this.tabbedPane.getComponent(j).isShowing()) {
           int x = this.tabbedPane.getBoundsAt(j).x + this.tabbedPane.getBoundsAt(j).width - 8 - 5;
           int y = this.tabbedPane.getBoundsAt(j).y + 5;
@@ -116,7 +127,7 @@ public class ClosableTabbedPane extends JTabbedPane
         }
       if (mouseOverTab(this.meX, this.meY))
         drawClose(g, this.closeX, this.closeY);
-    }
+    }}
 
     private void drawClose(Graphics g, int x, int y)
     {
@@ -145,14 +156,17 @@ public class ClosableTabbedPane extends JTabbedPane
     }
 
     private boolean mouseOverTab(int x, int y) {
+        
+      
       int tabCount = this.tabbedPane.getTabCount();
+      if(tabCount > 1){
       for (int j = 0; j < tabCount; j++)
         if (this.tabbedPane.getBoundsAt(j).contains(this.meX, this.meY)) {
           this.selectedTab = j;
           this.closeX = (this.tabbedPane.getBoundsAt(j).x + this.tabbedPane.getBoundsAt(j).width - 8 - 5);
           this.closeY = (this.tabbedPane.getBoundsAt(j).y + 5);
           return true;
-        }
+        }}
       return false;
     }
   }

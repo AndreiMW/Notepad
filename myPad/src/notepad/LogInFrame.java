@@ -6,25 +6,24 @@
 package notepad;
 
 import java.awt.Color;
-
+import java.awt.event.KeyEvent;
 
 /**
  *
  * @author andre
  */
 public class LogInFrame extends javax.swing.JFrame {
-    
+
     static Integer userIndex = 0;
 
     public LogInFrame() {
         initComponents();
         getContentPane().setLayout(null);
-        
+
         progressBar.setVisible(false);
         logginInLabel.setVisible(false);
-        
         new ProgressBarColor();
-       
+
     }
 
     /**
@@ -58,11 +57,6 @@ public class LogInFrame extends javax.swing.JFrame {
         usernameField.setForeground(new java.awt.Color(255, 255, 255));
         usernameField.setBorder(null);
         usernameField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        usernameField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameFieldActionPerformed(evt);
-            }
-        });
         getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 140, 32));
         usernameField.setOpaque(false);
         usernameField.setBackground(new Color(0,0,0,0));
@@ -70,9 +64,9 @@ public class LogInFrame extends javax.swing.JFrame {
         passwordField.setFont(new java.awt.Font("Bauhaus 93", 0, 18)); // NOI18N
         passwordField.setForeground(new java.awt.Color(255, 255, 255));
         passwordField.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
+        passwordField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                passwordFieldKeyPressed(evt);
             }
         });
         getContentPane().add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, 140, 32));
@@ -112,36 +106,35 @@ public class LogInFrame extends javax.swing.JFrame {
         for (int i = 0; i < passwordUser.length; i++) {
             passwordUserString += passwordUser[i];
         }
-       
-        LoginWorker lw = new LoginWorker(loginUser,passwordUserString,this){
-            
-            @Override 
-            protected void done(){
-                
+
+        LoginWorker lw = new LoginWorker(loginUser, passwordUserString, this) {
+
+            @Override
+            protected void done() {
+
                 progressBar.setVisible(false);
                 logginInLabel.setVisible(false);
-        
-        }};
+
+            }
+        };
         lw.execute();
         progressBar.setVisible(true);
         logginInLabel.setVisible(true);
-      
-      
+
+
     }//GEN-LAST:event_loginButtonActionPerformed
 
-    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernameFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
-
     private void createButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createButtonActionPerformed
-        
+
         new CreateAccountFrame().setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_createButtonActionPerformed
+
+    private void passwordFieldKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_passwordFieldKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            loginButton.doClick();
+        }
+    }//GEN-LAST:event_passwordFieldKeyPressed
 
     /**
      * @param args the command line arguments
